@@ -15,7 +15,7 @@ const createNewComposeFile = function (options, continueWith) {
   const services = options.services;
   const networks = options.networks;
   const volumes = options.volumes;
-  const data = { version: '2' };
+  const data = { version: options.version };
 
   if (services) {
     data.services = services;
@@ -64,9 +64,10 @@ const createComposeFile = function (options, continueWith) {
   const networks = options.networks;
   const volumes = options.volumes;
   const templatePath = options.templatePath;
+  const version = options.version || 2;
 
   if (!templatePath) {
-    createNewComposeFile({ outputPath, services, networks, volumes }, continueWith);
+    createNewComposeFile({ outputPath, services, networks, volumes, version }, continueWith);
   }
 };
 
