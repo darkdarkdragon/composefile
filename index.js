@@ -15,6 +15,7 @@ const createNewComposeFile = function (options, continueWith) {
   const services = options.services;
   const networks = options.networks;
   const volumes = options.volumes;
+  const secrets = options.secrets;
   const data = { version: options.version };
 
   if (services) {
@@ -27,6 +28,10 @@ const createNewComposeFile = function (options, continueWith) {
 
   if (volumes) {
     data.volumes = volumes;
+  }
+
+  if (secrets) {
+    data.secrets = secrets
   }
   writeYaml(outputPath, data, continueWith);
 };
@@ -65,9 +70,10 @@ const createComposeFile = function (options, continueWith) {
   const volumes = options.volumes;
   const templatePath = options.templatePath;
   const version = options.version || 2;
+  const secrets = options.secrets;
 
   if (!templatePath) {
-    createNewComposeFile({ outputPath, services, networks, volumes, version }, continueWith);
+    createNewComposeFile({ outputPath, services, networks, volumes, version, secrets }, continueWith);
   }
 };
 
