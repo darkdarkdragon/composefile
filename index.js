@@ -8,6 +8,8 @@ const writeYaml = require('write-yaml');
  * @param {Object} options.services
  * @param {Object} options.networks
  * @param {Object} options.volumes
+ * @param {Object} options.configs
+ * @param {Object} options.secrets
  * @param {function} continueWith
  */
 const createNewComposeFile = function (options, continueWith) {
@@ -16,6 +18,7 @@ const createNewComposeFile = function (options, continueWith) {
   const networks = options.networks;
   const volumes = options.volumes;
   const secrets = options.secrets;
+  const configs = options.configs;
   const data = { version: options.version };
 
   if (services) {
@@ -33,6 +36,10 @@ const createNewComposeFile = function (options, continueWith) {
   if (secrets) {
     data.secrets = secrets
   }
+
+  if (configs) {
+    data.configs = configs
+  }
   writeYaml(outputPath, data, continueWith);
 };
 
@@ -44,6 +51,8 @@ const createNewComposeFile = function (options, continueWith) {
  * @param {Object} options.services
  * @param {Object} options.networks
  * @param {Object} options.volumes
+ * @param {Object} options.secrets
+ * @param {Object} options.configs
  * @param {function} continueWith
  */
 const createComposeFile = function (options, continueWith) {
@@ -71,9 +80,10 @@ const createComposeFile = function (options, continueWith) {
   const templatePath = options.templatePath;
   const version = options.version || 2;
   const secrets = options.secrets;
+  const configs = options.configs;
 
   if (!templatePath) {
-    createNewComposeFile({ outputPath, services, networks, volumes, version, secrets }, continueWith);
+    createNewComposeFile({ outputPath, services, networks, volumes, version, secrets, configs }, continueWith);
   }
 };
 
